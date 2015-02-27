@@ -1,12 +1,17 @@
 /* 
- *  checkout.js is run with Node. 
- *  Usage: node checkout <optional product string>
- *  By default, it will initialize a Supermarket object,
- *  its products and cart items as specified in the code-challenge,
- *  then run 'checkout' and return the total cost of the cart.
+ *  checkout.js is used to instantiate supermarket.js 
+ *  
+ *  It is run from the terminal. 
+ *  
+ *  To run, type: 'node checkout <optional product string>'
+ *  
+ *  By default the script will initialize a Supermarket object
+ *  populated with products and cart items as specified in the code-challenge.
+ *  It will then run 'checkout' and print out the grand total of the cart.
  *
- *  The optional product string should be a series of capital A's,
- *  B's and C's. (i.e. 'AAABBBCCC' or 'CCCCBAABA')
+ *  Passing in the optional product string will replace the default cart with
+ *  your custom string. Please use a series of A's, B's, and C's. 
+ *  (i.e. node checkout 'BACCABACCABACCA')
 */
 
 'use strict'
