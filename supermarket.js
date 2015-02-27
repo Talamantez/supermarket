@@ -31,7 +31,7 @@ var _ = require('./underscore');
 
 var Supermarket = function(){
     
-    // Allow nested access to object
+    // Create an alias for the supermarket object to allow nested access
     var self = this;
     // Create a cart as an empty string
     this.cart = '';
