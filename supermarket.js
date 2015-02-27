@@ -15,8 +15,12 @@ List of Methods:
     countProduct(): Count up instances of a product 
     applyDiscount(): Applies discount to a total
     
-    initCart(): Initialize cart as the String 'ABBACBBAB'
+    initCart(): Initialize cart as the String 'ABBACBBAB', 
+            or uses argument from commandline (i.e. node checkout.js 'CCCCBBAAA') 
     Product(): Product constructor
+
+    findProduct(): Locate a product by name
+    updatePrice(): Update a product's price
 */
 
 var _ = require('./underscore');
@@ -26,8 +30,8 @@ var Supermarket = function(){
     this.Product = function( name, price, discountThresh, discountAmt ){
         this.name = name;
         this.price = price;
-        this.discountThresh = discountThresh;
-        this.discountAmt = discountAmt;
+        this.discountThresh = discountThresh || null;
+        this.discountAmt = discountAmt || null;
         console.log('\nCreated new Product: ');
         console.dir( this );
     }
@@ -41,7 +45,7 @@ var Supermarket = function(){
         var total = 0;
         // Loop over products array
         _.each( that.products, function( product ){
-            console.log('\nsumming '+ product.name + ' products');
+            console.log('\nSumming '+ product.name + ' products');
             // Count instances of product in input string
             var numItems = that.countProduct( product.name );
             
@@ -51,7 +55,7 @@ var Supermarket = function(){
             */
 
             total += numItems * product.price;
-            console.log('total: ' + total);          
+            console.log('updated total: ' + total);          
             /* 
             If a product has discount data and the count of instances 
             of the item is greaterthan its discount threshold, 
@@ -95,10 +99,11 @@ var Supermarket = function(){
         return total;
     }
 
-    this.initCart = function(){
+    this.initCart = function( string ){
 
         // Put some items in the cart
-        this.cart += 'ABBACBBAB';
+        this.cart += process.argv[2] || 'ABBACBBAB';
+        console.log( 'Cart initialized ' + this.cart );
     }
     this.initProducts = function(){
 
@@ -117,12 +122,12 @@ var Supermarket = function(){
     }
     this.updatePrice = function( productName , newPrice ){
         var updatee = this.findProduct( productName );
-        console.log('updating ' + updatee.name );
+        console.log('\nupdating ' + updatee.name );
         updatee.price = newPrice;
-        console.log('New price for ' + updatee.name + ' is ' + newPrice );
+        console.log('\nNew price for ' + updatee.name + ' is ' + newPrice );
     }
     this.findProduct = function( productName ){
-        console.log('finding ' + productName );
+        console.log('\nfinding ' + productName );
         var foundProduct = _.find(this.products, function( obj ){
             return obj.name ===  productName
         });
