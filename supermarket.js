@@ -33,8 +33,11 @@ var Supermarket = function(){
     
     // Allow nested access to object
     var self = this;
-
+    // Create a cart as an empty string
     this.cart = '';
+    // Create an empty products array
+    this.products = [];
+    // Create a constructor for Product
     this.Product = function( name, price, discountThresh, discountAmt ){
         this.name = name;
         this.price = price;
@@ -43,8 +46,8 @@ var Supermarket = function(){
         console.log('\nCreated new Product: ');
         console.dir( this );
     }
-    this.products = [];
-
+    // Create a function that accepts a string, finds and sums products
+    // from that string, then outputs a Grand Total
     this.checkout = function( items ){
 
         // Initialize total
@@ -84,7 +87,7 @@ var Supermarket = function(){
         console.log('\nGRAND TOTAL FOR CART:  $' + total +'\n' );
         return total;
     }
-
+    // Count up instances of a product
     this.countProduct = function( productName ){
 
         // Split the input string into an array
@@ -96,7 +99,7 @@ var Supermarket = function(){
         // Return the length of the array
         return( filteredArray.length );
     }
-
+    // Apply a discount to a total
     this.applyDiscount = function( total , discountAmt , numDiscounts ){
         
         /*
@@ -109,13 +112,14 @@ var Supermarket = function(){
         // Return the adjusted total
         return total;
     }
-
+    // Initialize the cart string
     this.initCart = function( string ){
 
         // Put some items in the cart
         this.cart += process.argv[2] || 'ABBACBBAB';
         console.log( 'Cart initialized ' + self.cart );
     }
+    // Initialize the Products array
     this.initProducts = function(){
 
         // Put some Products in the products array
@@ -126,6 +130,7 @@ var Supermarket = function(){
         // Attempt to add another Product named 'A', expect to reject
             self.addProduct( 'A' , 20.00 );
     }
+    // Initialize both cart and products
     this.init = function(){
 
         // Initialize Cart
@@ -133,12 +138,14 @@ var Supermarket = function(){
         // Initialize Products
         this.initProducts();
     }
+    // Update a product's price
     this.updatePrice = function( productName , newPrice ){
         var updatee = self.findProduct( productName );
         console.log('\nupdating ' + updatee.name );
         updatee.price = newPrice;
         console.log('\nNew price for ' + updatee.name + ' is ' + newPrice );
     }
+    // Find a product by name
     this.findProduct = function( productName ){
         console.log('\nFinding ' + productName );
         var foundProduct = _.find(self.products, function( obj ){
@@ -151,23 +158,24 @@ var Supermarket = function(){
             return foundProduct;
         }
     }
+    // Add a product
     this.addProduct = function( name, price, discountThresh, discountAmt ){
-     
-
+        // Name and price are required, so test for those
         if( name && price ){
+              // If the product is already in the inventory, return with a comment
               if( self.findProduct( name ) ){
                 console.log('That product is already in the inventory');
                 return;
             } else {
-                  var newProduct = new self.Product( name, price, discountThresh, discountAmt );
-                  self.products.push( newProduct );
+                // Else, create a new Product  
+                var newProduct = new self.Product( name, price, discountThresh, discountAmt );
+                self.products.push( newProduct );
             }
         } else {
             console.log('A name and price are required to add a product');
             return;
         }
     }
-
 }
 
 module.exports = Supermarket;
